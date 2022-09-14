@@ -318,9 +318,8 @@ function App(props) {
                 this <Contract/> component will automatically parse your ABI
                 and give you a form to interact with it locally
             */}
-
           <Contract
-            name="YourContract"
+            name="AdSpaceFactory"
             price={price}
             signer={userSigner}
             provider={localProvider}
