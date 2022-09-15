@@ -6,11 +6,6 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 //import "./AdSpace.sol";
 
 contract AdSpaceFactory {
-    // contract for optimism-goerli right now
-
-
-    address private constant TABLELANDCONTRACT =
-        0xC72E8a7Be04f2469f8C2dB3F1BdF69A7D516aBbA;
     ITablelandTables private _tableland;
 
     uint256 private _adspacetableid;
@@ -22,29 +17,53 @@ contract AdSpaceFactory {
     uint256 private _dealtableid;
     string private _dealTable;
 
-
     constructor(address tablelandAddress) {
         _tableland = ITablelandTables(tablelandAddress);
 
-        _adspacetableid = _createTable("CREATE TABLE AdSpaces (adspace_id INTEGER PRIMARY KEY UNIQUE,name TEXT, website TEXT, verified INTEGER, status TEXT, owner TEXT, contract TEXT, asking_price INTEGER);");
-        _adSpaceTable = string.concat("AdSpaces","_",Strings.toString(block.chainid),"_",Strings.toString(_adspacetableid));
+        _adspacetableid = _createTable(
+            "CREATE TABLE AdSpaces (adspace_id INTEGER PRIMARY KEY UNIQUE,name TEXT, website TEXT, verified INTEGER, status TEXT, owner TEXT, contract TEXT, asking_price INTEGER, size TEXT);"
+        );
+        _adSpaceTable = string.concat(
+            "AdSpaces",
+            "_",
+            Strings.toString(block.chainid),
+            "_",
+            Strings.toString(_adspacetableid)
+        );
 
-        _campaigntableid = _createTable("CREATE CAMPAIGN STATEMENT");
-        _campaignTable = string.concat("Campaigns","_",Strings.toString(block.chainid),"_",Strings.toString(_adspacetableid));
+        _campaigntableid = _createTable(
+            "CREATE TABLE Campaigns (deal_id AUTOINCREMENT PRIMARY KEY UNIQUE, campaign_id_fk INTEGER, adspace_id_fk INTEGER, duration_deal INTEGER, price INTEGER, started_at INTEGER);"
+        );
+        _campaignTable = string.concat(
+            "Campaigns",
+            "_",
+            Strings.toString(block.chainid),
+            "_",
+            Strings.toString(_campaigntableid)
+        );
 
-        _dealtableid = _createTable("CREATE DEAL STATEMENT");
-        _dealTable = string.concat("Deals","_",Strings.toString(block.chainid),"_",Strings.toString(_adspacetableid));
+        _dealtableid = _createTable(
+            "CREATE TABLE Deals (campaign_id AUTOINCREMENT PRIMARY KEY UNIQUE, cid TEXT, size TEXT, link TEXT)"
+        );
+        _dealTable = string.concat(
+            "Deals",
+            "_",
+            Strings.toString(block.chainid),
+            "_",
+            Strings.toString(_dealtableid)
+        );
     }
 
     function createAdSpace(
         string memory _name,
         string memory _website,
         //string _symbol,
-        string memory  _asking_price
+        string memory _asking_price,
         //uint256 _adspaceId,
         //address _adspaceOwner,
-        //uint8 _numNFTs
-    ) external payable /*returns (address)*/ {
+        //uint8 _numNFTs,
+        string memory _size /*returns (address)*/
+    ) external payable {
         //AdSpace _adspace = new AdSpace(
         //    _name,
         //    _symbol,
@@ -52,54 +71,44 @@ contract AdSpaceFactory {
         //    _adspaceOwner,
         //    _numNFTs
         //);
-        string memory sqlStatement = 
-        string.concat(
-        "INSERT INTO "
-        ,_adSpaceTable
-        ," (name,website,verified,status,owner,contract,asking_price) VALUES ("
-        ,_name
-        ,','
-        ,_website
-        ,','
-        ,"0"
-        ,','
-        ,'Pending Verification'
-        ,','
-        //,AdSpace.address
-        ,','
-        ,_asking_price
-        ,');'
+        string memory sqlStatement = string.concat(
+            "INSERT INTO ",
+            _adSpaceTable,
+            " (name,website,verified,status,owner,contract,asking_price,size) VALUES (",
+            _name,
+            ",",
+            _website,
+            ",",
+            "0",
+            ",",
+            "Pending Verification",
+            ",",
+            "0x0",
+            ",",
+            _asking_price,
+            ",",
+            _size,
+            ");"
         );
-        
-      
+
         _runSQL(_adspacetableid, sqlStatement);
         //return address(_adspace);
     }
 
-    function _createTable(string memory statement)
-        internal
-        returns (uint256)
-    {
+    function _createTable(string memory statement) internal returns (uint256) {
         return _tableland.createTable(address(this), statement);
     }
 
-    function runSQL(uint256 tableId, string memory statement)
-        external
-        payable
-    {
+    function runSQL(uint256 tableId, string memory statement) external payable {
         _runSQL(tableId, statement);
     }
 
-    function _runSQL(uint256 tableId, string memory statement)
-        internal
-    {
+    function _runSQL(uint256 tableId, string memory statement) internal {
         _tableland.runSQL(address(this), tableId, statement);
     }
 
     // onlyOwner
-    function setController(uint256 tableId, address controller)
-        external
-    {
+    function setController(uint256 tableId, address controller) external {
         _tableland.setController(address(this), tableId, controller);
     }
 
@@ -126,33 +135,35 @@ contract AdSpaceFactory {
     // getter
     function getController(uint256 tableId)
         external
-        //override
-        returns (address)
+        returns (
+            //override
+            address
+        )
     {
         return _tableland.getController(tableId);
     }
 
-    function getAdSpaceTableId() view external returns (uint256) {
+    function getAdSpaceTableId() external view returns (uint256) {
         return _adspacetableid;
     }
 
-    function getCampaignTableId() view external returns (uint256) {
+    function getCampaignTableId() external view returns (uint256) {
         return _campaigntableid;
     }
 
-    function getDealTableId() view external returns (uint256) {
+    function getDealTableId() external view returns (uint256) {
         return _dealtableid;
     }
 
-    function getAdSpaceTable() view external returns (string memory) {
+    function getAdSpaceTable() external view returns (string memory) {
         return _adSpaceTable;
     }
 
-    function getCampaignTable() view external returns (string memory) {
+    function getCampaignTable() external view returns (string memory) {
         return _campaignTable;
     }
 
-    function getDealTable() view external returns (string memory) {
+    function getDealTable() external view returns (string memory) {
         return _dealTable;
     }
 }

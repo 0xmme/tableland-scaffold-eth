@@ -1,8 +1,12 @@
+/* eslint-disable no-unused-vars */
 // deploy/00_deploy_your_contract.js
 
 const { ethers } = require("hardhat");
 
 const localChainId = "31337";
+// contract for optimism-goerli right now
+
+const TABLELANDCONTRACT = 0xc72e8a7be04f2469f8c2db3f1bdf69a7d516abba;
 
 // const sleep = (ms) =>
 //   new Promise((r) =>
@@ -20,11 +24,10 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const TablelandTables = await ethers.getContract("TablelandTables", deployer);
   const TablelandTablesAddress = TablelandTables.address;
 
-
   await deploy("AdSpaceFactory", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-     args: [TablelandTablesAddress],
+    args: [TablelandTablesAddress],
     log: true,
     waitConfirmations: 5,
   });

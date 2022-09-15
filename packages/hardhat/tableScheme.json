@@ -2,8 +2,8 @@
   "tablesToCreate": [
     {
       "prefix": "AdSpace",
-      "schema": "adspace_id INTEGER PRIMARY KEY UNIQUE,name TEXT, website TEXT, verified INTEGER, status TEXT, owner TEXT, contract TEXT, asking_price INTEGER",
-      "schema_short": "adspace_id, name,  website, verified, status, owner, contract, asking_price",
+      "schema": "adspace_id AUTOINCREMENT PRIMARY KEY UNIQUE,name TEXT, website TEXT, verified INTEGER, status TEXT, owner TEXT, contract TEXT, asking_price INTEGER, size TEXT",
+      "schema_short": "adspace_id, name,  website, verified, status, owner, contract, asking_price, size",
       "fieldCount": 8,
       "data": [
         [
@@ -60,7 +60,7 @@
     },
     {
       "prefix": "Deal",
-      "schema": "deal_id INTEGER PRIMARY KEY UNIQUE, campaign_id_fk INTEGER, adspace_id_fk INTEGER, duration_deal INTEGER, price INTEGER, started_at INTEGER",
+      "schema": "deal_id AUTOINCREMENT PRIMARY KEY UNIQUE, campaign_id_fk INTEGER, adspace_id_fk INTEGER, duration_deal INTEGER, price INTEGER, started_at INTEGER",
       "schema_short": "deal_id, campaign_id_fk, adspace_id_fk, duration_deal, price, started_at",
       "fieldCount": 5,
       "data": [
@@ -73,7 +73,7 @@
     },
     {
       "prefix": "Campaign",
-      "schema": "campaign_id INTEGER PRIMARY KEY UNIQUE, cid TEXT, size TEXT, link TEXT",
+      "schema": "campaign_id AUTOINCREMENT PRIMARY KEY UNIQUE, cid TEXT, size TEXT, link TEXT",
       "schema_short": "campaign_id, cid, size, link",
       "fieldCount": 2,
       "data": [
