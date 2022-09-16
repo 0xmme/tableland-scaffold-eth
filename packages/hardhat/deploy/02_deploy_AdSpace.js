@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 const { ethers } = require("hardhat");
 
 const localChainId = "31337";
@@ -11,14 +11,14 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   await deploy("AdSpace", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    // args: [ "Hello", ethers.utils.parseEther("1.5") ],
+    args: ["funny adspace contract 00", "DAI", 0, deployer, 10],
     log: true,
     waitConfirmations: 5,
   });
 
   // Getting a previously deployed contract
-  const YourContract = await ethers.getContract("AdSpace", deployer);
-  
+  const AdSpace = await ethers.getContract("AdSpace", deployer);
+
   // Verify from the command line by running `yarn verify`
 
   // You can also Verify your contracts with Etherscan here...
@@ -35,4 +35,4 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   //   console.error(error);
   // }
 };
-module.exports.tags = ["AdSpace"];
+module.exports.tags = ["AdSpace", "all"];

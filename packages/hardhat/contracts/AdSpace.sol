@@ -17,13 +17,13 @@ contract AdSpace is ERC721Enumerable, Ownable, ERC2981ContractWideRoyalties {
 
     address public platformAddress;
 
-    address public _factoryAddress;
-    AdSpaceFactory public _factory;
+    address private _factoryAddress;
+    AdSpaceFactory private _factory;
 
     constructor(
         string memory _name,
         string memory _symbol,
-        uint _adspaceId,
+        uint256 _adspaceId,
         address _adspaceOwner,
         uint8 _numNFTs
     ) ERC721(_name, _symbol) {

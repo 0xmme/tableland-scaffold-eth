@@ -3,7 +3,7 @@ pragma solidity ^0.8.10;
 import "./ITablelandTables.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
-//import "./AdSpace.sol";
+import "./AdSpace.sol";
 
 contract AdSpaceFactory {
     ITablelandTables private _tableland;
@@ -17,11 +17,15 @@ contract AdSpaceFactory {
     uint256 private _dealtableid;
     string private _dealTable;
 
+    uint256 private _counter_adspaces = 0;
+
+    address[] private Adspaces;
+
     constructor(address tablelandAddress) {
         _tableland = ITablelandTables(tablelandAddress);
 
         _adspacetableid = _createTable(
-            "CREATE TABLE AdSpaces (adspace_id INTEGER PRIMARY KEY UNIQUE,name TEXT, website TEXT, verified INTEGER, status TEXT, owner TEXT, contract TEXT, asking_price INTEGER, size TEXT);"
+            "CREATE TABLE AdSpaces (adspace_id AUTOINCREMENT PRIMARY KEY UNIQUE,name TEXT, website TEXT, verified INTEGER, status TEXT, owner TEXT, contract TEXT, asking_price INTEGER, size TEXT);"
         );
         _adSpaceTable = string.concat(
             "AdSpaces",
@@ -57,20 +61,21 @@ contract AdSpaceFactory {
     function createAdSpace(
         string memory _name,
         string memory _website,
-        //string _symbol,
+        string memory _symbol,
         string memory _asking_price,
         //uint256 _adspaceId,
         //address _adspaceOwner,
-        //uint8 _numNFTs,
-        string memory _size /*returns (address)*/
+        uint8 _numNFTs,
+        string memory _size
     ) external payable {
-        //AdSpace _adspace = new AdSpace(
-        //    _name,
-        //    _symbol,
-        //    _adspaceId,
-        //    _adspaceOwner,
-        //    _numNFTs
-        //);
+        AdSpace _adspace = new AdSpace(
+            _name,
+            _symbol,
+            _counter_adspaces,
+            msg.sender,
+            //_adspaceOwner,
+            _numNFTs
+        );
         string memory sqlStatement = string.concat(
             "INSERT INTO ",
             _adSpaceTable,
@@ -79,11 +84,13 @@ contract AdSpaceFactory {
             ",",
             _website,
             ",",
-            "0",
+            "0", //verified
             ",",
-            "Pending Verification",
+            "Pending Verification", // status
             ",",
-            "0x0",
+            Strings.toHexString(uint256(uint160(address(msg.sender))), 20), // owner
+            ",",
+            Strings.toHexString(uint256(uint160(address(_adspace))), 20), // contract
             ",",
             _asking_price,
             ",",
@@ -92,7 +99,7 @@ contract AdSpaceFactory {
         );
 
         _runSQL(_adspacetableid, sqlStatement);
-        //return address(_adspace);
+        Adspaces.push(address(_adspace));
     }
 
     function _createTable(string memory statement) internal returns (uint256) {
@@ -165,5 +172,9 @@ contract AdSpaceFactory {
 
     function getDealTable() external view returns (string memory) {
         return _dealTable;
+    }
+
+    function getAdSpaceAddress(uint256 i) external view returns (address) {
+        return Adspaces[i];
     }
 }

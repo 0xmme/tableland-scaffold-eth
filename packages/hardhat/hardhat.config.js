@@ -1,3 +1,19 @@
+/* eslint-disable spaced-comment */
+/* eslint-disable no-throw-literal */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable eqeqeq */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-use-before-define */
+/* eslint-disable consistent-return */
+/* eslint-disable no-shadow */
+/* eslint-disable camelcase */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable global-require */
+/* eslint-disable new-cap */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
 require("dotenv").config();
 const { utils } = require("ethers");
 const fs = require("fs");
@@ -66,6 +82,20 @@ module.exports = {
 
       */
     },
+    goerli: {
+      url: `https://eth-goerli.alchemyapi.io/v2/${process.env.ETHEREUM_GOERLI_API_KEY}`,
+      accounts:
+        process.env.ETHEREUM_GOERLI_PRIVATE_KEY !== undefined
+          ? [process.env.ETHEREUM_GOERLI_PRIVATE_KEY]
+          : [],
+    },
+    optimismGoerli: {
+      url: `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_API_KEY}`,
+      accounts:
+        process.env.OPTIMISM_GOERLI_PRIVATE_KEY !== undefined
+          ? [process.env.OPTIMISM_GOERLI_PRIVATE_KEY]
+          : [],
+    },
     rinkeby: {
       url: "https://rinkeby.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
       //    url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXX/eth/rinkeby", // <---- YOUR MORALIS ID! (not limited to infura)
@@ -94,13 +124,7 @@ module.exports = {
         mnemonic: mnemonic(),
       },
     },
-    goerli: {
-      url: "https://goerli.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
-      //      url: "https://speedy-nodes-nyc.moralis.io/XXXXXXXXXXXXXXXXXXXXXXXXX/eth/goerli", // <---- YOUR MORALIS ID! (not limited to infura)
-      accounts: {
-        mnemonic: mnemonic(),
-      },
-    },
+
     xdai: {
       url: "https://rpc.xdaichain.com/",
       accounts: {
@@ -317,12 +341,40 @@ module.exports = {
   etherscan: {
     apiKey: {
       mainnet: "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW",
-      goerli: "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW",
+      goerli: "V6VGFJ1Z7XMHA5CPDGY3GAJCVCFMRAZBTQ",
       kovan: "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW",
       rinkeby: "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW",
       ropsten: "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW",
+      // optimism: "ZZFWZGUWKR646DCXXZ5KVQTYU7XFJ5SQ9I",
+      // optimismGoerli: "ZZFWZGUWKR646DCXXZ5KVQTYU7XFJ5SQ9I",
       // add other network's API key here
     },
+    customChains: [
+      {
+        network: "goerli",
+        chainId: 10,
+        urls: {
+          apiURL: "https://api-goerli.etherscan.io",
+          browserURL: "https://api-goerli.etherscan.io",
+        },
+      },
+      // {
+      //  network: "optimism",
+      //  chainId: 10,
+      //  urls: {
+      //    apiURL: "https://api-optimistic.etherscan.io/api",
+      //    browserURL: "https://api-optimistic.etherscan.io",
+      //  },
+      // },
+      //{
+      //  network: "optimismGoerli",
+      //  chainId: 420,
+      //  urls: {
+      //    apiURL: "https://api-goerli-optimism.etherscan.io/api",
+      //    browserURL: "https://api-goerli-optimism.etherscan.io",
+      //  },
+      //},
+    ],
   },
   abiExporter: {
     path: "../react-app/src/contracts/ABI",

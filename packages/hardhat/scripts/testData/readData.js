@@ -1,7 +1,7 @@
 /* eslint-disable spaced-comment */
 /* eslint-disable object-shorthand */
 /* eslint-disable no-unused-vars */
-//import connect from "@tableland/sdk";
+//import connect from  "@tableland/sdk";
 //import * as fs from "fs";
 
 async function main() {
@@ -13,9 +13,10 @@ async function main() {
     name: "localhost",
     chain: "local-tableland",
     host: "http://localhost:8545/",
+    contract: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
   };
 
-  const tableToRead = "AdSpaces_31337_0";
+  const tableToRead = "AdSpaces_31337_9";
 
   console.log(`Trying to read table '${tableToRead}' on 'localhost'`);
 

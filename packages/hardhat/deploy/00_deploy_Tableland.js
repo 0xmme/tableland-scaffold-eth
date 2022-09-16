@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // deploy/00_deploy_your_contract.js
 
 const { ethers } = require("hardhat");
@@ -79,4 +80,4 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   //   console.error(error);
   // }
 };
-module.exports.tags = ["Tableland"];
+module.exports.tags = ["Tableland", "all"];
