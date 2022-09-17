@@ -1,9 +1,10 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable no-unused-vars */
 // deploy/00_deploy_your_contract.js
 
 const { ethers } = require("hardhat");
 
-// const OP_GOE_TABLELANDCONTRACT = "0xc72e8a7be04f2469f8c2db3f1bdf69a7d516abba";
+const OP_GOE_TABLELANDCONTRACT = "0xc72e8a7be04f2469f8c2db3f1bdf69a7d516abba";
 const GOE_TABLELANDCONTRACT = "0xDA8EA22d092307874f30A1F277D1388dca0BA97a";
 
 // const sleep = (ms) =>
@@ -22,45 +23,49 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   console.log(chainId);
 
   // localhost?
-  // const TablelandTables = await ethers.getContract("TablelandTables", deployer);
-  // const localTablelandTablesAddress = TablelandTables.address;
+  //const TablelandTables = await ethers.getContract("TablelandTables", deployer);
+  //const localTablelandTablesAddress = TablelandTables.address;
 
-  // await deploy("AdSpaceFactory", {
+  //await deploy("AdSpaceFactory", {
   //  // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
   //  from: deployer,
   //  args: [localTablelandTablesAddress],
   //  log: true,
   //  waitConfirmations: 5,
-  // });
-  // Optimism Goerli?
-  // await deploy("AdSpaceFactory", {
-  //  // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
-  //  from: deployer,
-  //  args: [OP_GOE_TABLELANDCONTRACT],
-  //  log: true,
-  //  waitConfirmations: 5,
-  // });
+  //});
 
-  // Goerli?
+  // Optimism Goerli?
   await deploy("AdSpaceFactory", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    args: [GOE_TABLELANDCONTRACT],
+    args: [OP_GOE_TABLELANDCONTRACT],
     log: true,
     waitConfirmations: 5,
   });
+  const AdSpaceFactory = await ethers.getContract("AdSpaceFactory", deployer);
+
+  console.log(AdSpaceFactory.address);
+
+  // Goerli?
+  //const tx = await deploy("AdSpaceFactory", {
+  //  // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
+  //  from: deployer,
+  //  args: [GOE_TABLELANDCONTRACT],
+  //  log: true,
+  //  waitConfirmations: 5,
+  //});
 
   // verifiying on goerli
-  const AdSpaceFactory = await ethers.getContract("AdSpaceFactory", deployer);
-  try {
-    await run("verify:verify", {
-      address: AdSpaceFactory.address,
-      contract: "contracts/AdSpaceFactory.sol:AdSpaceFactory",
-      constructorArguments: [GOE_TABLELANDCONTRACT],
-    });
-  } catch (error) {
-    console.error(error);
-  }
+  //const AdSpaceFactory = await ethers.getContract("AdSpaceFactory", deployer);
+  //try {
+  //  await run("verify:verify", {
+  //    address: AdSpaceFactory.address,
+  //    contract: "contracts/AdSpaceFactory.sol:AdSpaceFactory",
+  //    constructorArguments: [GOE_TABLELANDCONTRACT],
+  //  });
+  //} catch (error) {
+  //  console.error(error);
+  //}
 };
 
 module.exports.tags = ["AdSpaceFactory", "all"];
