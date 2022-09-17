@@ -21,7 +21,6 @@ contract AdSpaceFactory is ERC721Holder {
     uint256 private _counter_adspaces = 0;
 
     address[] private Adspaces;
-    mapping(address => uint256) private Adspaces_tableIds;
 
     constructor(address tablelandAddress) {
         _tableland = ITablelandTables(tablelandAddress);
@@ -102,6 +101,7 @@ contract AdSpaceFactory is ERC721Holder {
 
         _runSQL(_adspacetableid, sqlStatement);
         Adspaces.push(address(_adspace));
+        _counter_adspaces++;
     }
 
     function _createTable(string memory statement) internal returns (uint256) {
