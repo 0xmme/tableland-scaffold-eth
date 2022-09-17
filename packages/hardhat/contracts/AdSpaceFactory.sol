@@ -179,4 +179,8 @@ contract AdSpaceFactory is ERC721Holder {
     function getAdSpaceAddress(uint256 i) external view returns (address) {
         return Adspaces[i];
     }
+
+    function getCounterAdSpaces() external view returns (uint256) {
+        return _counter_adspaces;
+    }
 }

@@ -23,28 +23,28 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   console.log(chainId);
 
   // localhost?
-  //const TablelandTables = await ethers.getContract("TablelandTables", deployer);
-  //const localTablelandTablesAddress = TablelandTables.address;
+  const TablelandTables = await ethers.getContract("TablelandTables", deployer);
+  const localTablelandTablesAddress = TablelandTables.address;
 
-  //await deploy("AdSpaceFactory", {
-  //  // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
-  //  from: deployer,
-  //  args: [localTablelandTablesAddress],
-  //  log: true,
-  //  waitConfirmations: 5,
-  //});
-
-  // Optimism Goerli?
   await deploy("AdSpaceFactory", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    args: [OP_GOE_TABLELANDCONTRACT],
+    args: [localTablelandTablesAddress],
     log: true,
     waitConfirmations: 5,
   });
-  const AdSpaceFactory = await ethers.getContract("AdSpaceFactory", deployer);
 
-  console.log(AdSpaceFactory.address);
+  // Optimism Goerli?
+  //await deploy("AdSpaceFactory", {
+  //  // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
+  //  from: deployer,
+  //  args: [OP_GOE_TABLELANDCONTRACT],
+  //  log: true,
+  //  waitConfirmations: 5,
+  //});
+  //const AdSpaceFactory = await ethers.getContract("AdSpaceFactory", deployer);
+
+  //console.log(AdSpaceFactory.address);
 
   // Goerli?
   //const tx = await deploy("AdSpaceFactory", {
