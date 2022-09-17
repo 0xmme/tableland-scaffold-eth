@@ -23,16 +23,16 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   console.log(chainId);
 
   // localhost?
-  const TablelandTables = await ethers.getContract("TablelandTables", deployer);
-  const localTablelandTablesAddress = TablelandTables.address;
+  //const TablelandTables = await ethers.getContract("TablelandTables", deployer);
+  //const localTablelandTablesAddress = TablelandTables.address;
 
-  await deploy("AdSpaceFactory", {
-    // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
-    from: deployer,
-    args: [localTablelandTablesAddress],
-    log: true,
-    waitConfirmations: 5,
-  });
+  //await deploy("AdSpaceFactory", {
+  //  // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
+  //  from: deployer,
+  //  args: [localTablelandTablesAddress],
+  //  log: true,
+  //  waitConfirmations: 5,
+  //});
 
   // Optimism Goerli?
   //await deploy("AdSpaceFactory", {
@@ -56,16 +56,16 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   //});
 
   // verifiying on goerli
-  //const AdSpaceFactory = await ethers.getContract("AdSpaceFactory", deployer);
-  //try {
-  //  await run("verify:verify", {
-  //    address: AdSpaceFactory.address,
-  //    contract: "contracts/AdSpaceFactory.sol:AdSpaceFactory",
-  //    constructorArguments: [GOE_TABLELANDCONTRACT],
-  //  });
-  //} catch (error) {
-  //  console.error(error);
-  //}
+  const AdSpaceFactory = await ethers.getContract("AdSpaceFactory", deployer);
+  try {
+    await run("verify:verify", {
+      address: AdSpaceFactory.address,
+      contract: "contracts/AdSpaceFactory.sol:AdSpaceFactory",
+      constructorArguments: [GOE_TABLELANDCONTRACT],
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 module.exports.tags = ["AdSpaceFactory", "all"];
