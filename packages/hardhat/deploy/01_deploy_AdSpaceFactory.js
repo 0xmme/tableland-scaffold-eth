@@ -47,13 +47,15 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   //console.log(AdSpaceFactory.address);
 
   // Goerli?
-  //const tx = await deploy("AdSpaceFactory", {
-  //  // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
-  //  from: deployer,
-  //  args: [GOE_TABLELANDCONTRACT],
-  //  log: true,
-  //  waitConfirmations: 5,
-  //});
+  const tx = await deploy("AdSpaceFactory", {
+    // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
+    from: deployer,
+    args: [GOE_TABLELANDCONTRACT],
+    log: true,
+    waitConfirmations: 5,
+  });
+
+  console.log(tx);
 
   // verifiying on goerli
   const AdSpaceFactory = await ethers.getContract("AdSpaceFactory", deployer);
