@@ -104,7 +104,6 @@ contract AdSpaceFactory is ERC721Holder, Ownable {
      * @notice create new AdSpace contract
      * @param _name name of new creating Adspace
      * @param _website website where the AdSpace will be located
-     * @param _symbol symbol short of new creating Adspace
      * @param _asking_price price of new creating Adspace
      * @param _numNFTs amount of NFTs to mint to msg.sender of creation
      * @param _size size of the AdSpaces: wide | small | scyscraper
@@ -113,7 +112,7 @@ contract AdSpaceFactory is ERC721Holder, Ownable {
     function createAdSpace(
         string memory _name,
         string memory _website,
-        string memory _symbol,
+        //string memory _symbol,
         string memory _asking_price,
         //uint256 _adspaceId,
         //address _adspaceOwner,
@@ -122,7 +121,7 @@ contract AdSpaceFactory is ERC721Holder, Ownable {
     ) external payable {
         AdSpace _adspace = new AdSpace(
             _name,
-            _symbol,
+            "$ADSPACE",
             _counter_adspaces,
             msg.sender,
             //_adspaceOwner,

@@ -5,7 +5,7 @@
 const { ethers } = require("hardhat");
 
 const OP_GOE_TABLELANDCONTRACT = "0xc72e8a7be04f2469f8c2db3f1bdf69a7d516abba";
-const GOE_TABLELANDCONTRACT = "0xDA8EA22d092307874f30A1F277D1388dca0BA97a";
+//const GOE_TABLELANDCONTRACT = "0xDA8EA22d092307874f30A1F277D1388dca0BA97a";
 
 // const sleep = (ms) =>
 //   new Promise((r) =>
@@ -18,9 +18,7 @@ const GOE_TABLELANDCONTRACT = "0xDA8EA22d092307874f30A1F277D1388dca0BA97a";
 module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
-  const chainId = await getChainId();
-
-  console.log(chainId);
+  //const chainId = await getChainId();
 
   // localhost?
   //const TablelandTables = await ethers.getContract("TablelandTables", deployer);
@@ -35,39 +33,34 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   //});
 
   // Optimism Goerli?
-  //await deploy("AdSpaceFactory", {
-  //  // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
-  //  from: deployer,
-  //  args: [OP_GOE_TABLELANDCONTRACT],
-  //  log: true,
-  //  waitConfirmations: 5,
-  //});
-  //const AdSpaceFactory = await ethers.getContract("AdSpaceFactory", deployer);
-
-  //console.log(AdSpaceFactory.address);
-
-  // Goerli?
-  const tx = await deploy("AdSpaceFactory", {
+  await deploy("AdSpaceFactory", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    args: [GOE_TABLELANDCONTRACT],
+    args: [OP_GOE_TABLELANDCONTRACT],
     log: true,
     waitConfirmations: 5,
   });
 
-  console.log(tx);
+  // Goerli?
+  //const tx = await deploy("AdSpaceFactory", {
+  //  // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
+  //  from: deployer,
+  //  args: [GOE_TABLELANDCONTRACT],
+  //  log: true,
+  //  waitConfirmations: 5,
+  //});
 
   // verifiying on goerli
-  const AdSpaceFactory = await ethers.getContract("AdSpaceFactory", deployer);
-  try {
-    await run("verify:verify", {
-      address: AdSpaceFactory.address,
-      contract: "contracts/AdSpaceFactory.sol:AdSpaceFactory",
-      constructorArguments: [GOE_TABLELANDCONTRACT],
-    });
-  } catch (error) {
-    console.error(error);
-  }
+  //const AdSpaceFactory = await ethers.getContract("AdSpaceFactory", deployer);
+  //try {
+  //  await run("verify:verify", {
+  //    address: AdSpaceFactory.address,
+  //    contract: "contracts/AdSpaceFactory.sol:AdSpaceFactory",
+  //    constructorArguments: [GOE_TABLELANDCONTRACT],
+  //  });
+  //} catch (error) {
+  //  console.error(error);
+  //}
 };
 
 module.exports.tags = ["AdSpaceFactory", "all"];
