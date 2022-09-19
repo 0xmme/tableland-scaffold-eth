@@ -72,7 +72,7 @@ contract AdSpaceFactory is ERC721Holder, Ownable {
             "CREATE TABLE Campaigns",
             "_",
             Strings.toString(block.chainid),
-            " (campaign_id INTEGER PRIMARY KEY, cid TEXT, size TEXT, link TEXT, owner TEXT);"
+            " (campaign_id INTEGER PRIMARY KEY,name TEXT, cid TEXT, size TEXT, link TEXT, owner TEXT);"
         );
         _campaigntableid = _createTable(sqlCampaign);
         _campaignTable = string.concat(
@@ -208,6 +208,7 @@ contract AdSpaceFactory is ERC721Holder, Ownable {
      * @dev owner will be auto assigned to msg.sender
      */
     function createCampaign(
+        string memory name,
         string memory cid,
         string memory size,
         string memory link
@@ -215,7 +216,9 @@ contract AdSpaceFactory is ERC721Holder, Ownable {
         string memory sqlCreateCampagin = string.concat(
             "INSERT INTO ",
             _campaignTable,
-            " (cid, size, link, owner) VALUES ('",
+            " (name, cid, size, link, owner) VALUES ('",
+            name,
+            "','",
             cid,
             "','",
             size,
