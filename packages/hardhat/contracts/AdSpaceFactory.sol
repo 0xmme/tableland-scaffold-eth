@@ -112,10 +112,7 @@ contract AdSpaceFactory is ERC721Holder, Ownable {
     function createAdSpace(
         string memory _name,
         string memory _website,
-        //string memory _symbol,
         string memory _asking_price,
-        //uint256 _adspaceId,
-        //address _adspaceOwner,
         uint8 _numNFTs,
         string memory _size
     ) external payable {
