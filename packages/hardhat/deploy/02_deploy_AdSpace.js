@@ -11,13 +11,15 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   await deploy("AdSpace", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    args: ["funny adspace contract 00", "DAI", 0, deployer, 10],
+    args: ["funny adspace contract 00", "WHAT", 5, deployer, 5],
     log: true,
     waitConfirmations: 5,
   });
 
   // Getting a previously deployed contract
   const AdSpace = await ethers.getContract("AdSpace", deployer);
+
+  console.log(AdSpace);
 
   // Verify from the command line by running `yarn verify`
 

@@ -181,7 +181,7 @@ contract AdSpaceFactory is ERC721Holder, Ownable {
             "');"
         );
 
-        _runSQL(_campaigntableid, sqlCreateDeal);
+        _runSQL(_dealtableid, sqlCreateDeal);
         _counter_deals++;
         emit DealCreated(_counter_deals, _campaignId, _adspaceId);
 
