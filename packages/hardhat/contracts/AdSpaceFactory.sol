@@ -231,6 +231,19 @@ contract AdSpaceFactory is ERC721Holder, Ownable {
         emit CampaignCreated(_counter_campaigns);
     }
 
+    function verifyAdSpace(uint256 _adspaceId) public onlyOwner {
+        ///@notice update the Adspace Tableland table
+        string memory sqlUpdateAdspace = string.concat(
+            "UPDATE ",
+            _adSpaceTable,
+            " SET verified = '1', status = 'Available' WHERE adspace_id = '",
+            Strings.toString(_adspaceId),
+            "';"
+        );
+        _runSQL(_adspacetableid, sqlUpdateAdspace);
+        emit AdSpaceUpdated(_adspaceId);
+    }
+
     ///@dev internal function to be only called by this Factory
     function _createTable(string memory statement) internal returns (uint256) {
         return _tableland.createTable(address(this), statement);

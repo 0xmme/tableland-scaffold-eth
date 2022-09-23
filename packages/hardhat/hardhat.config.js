@@ -91,10 +91,10 @@ module.exports = {
     },
     optimismGoerli: {
       url: `https://opt-goerli.g.alchemy.com/v2/${process.env.OPTIMISM_GOERLI_API_KEY}`,
-      accounts:
-        process.env.OPTIMISM_GOERLI_PRIVATE_KEY !== undefined
-          ? [process.env.OPTIMISM_GOERLI_PRIVATE_KEY]
-          : [],
+      accounts: { mnemonic: mnemonic() },
+      //process.env.OPTIMISM_GOERLI_PRIVATE_KEY !== undefined
+      //  ? [process.env.OPTIMISM_GOERLI_PRIVATE_KEY]
+      //  : [],
     },
     rinkeby: {
       url: "https://rinkeby.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
