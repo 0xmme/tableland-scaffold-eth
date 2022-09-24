@@ -19,8 +19,6 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   // Getting a previously deployed contract
   const AdSpace = await ethers.getContract("AdSpace", deployer);
 
-  console.log(AdSpace);
-
   // Verify from the command line by running `yarn verify`
 
   // You can also Verify your contracts with Etherscan here...
